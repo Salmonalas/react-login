@@ -40,6 +40,7 @@ export default function SignUp() {
 
   return (
     //<div className="gradient-custom-2" style={{ backgroundColor: '#9de2ff' }}>
+    //test
     <ThemeProvider theme={theme} >
       <Container component="main" maxWidth="xs">
         <CssBaseline />
