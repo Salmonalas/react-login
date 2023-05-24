@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import axios from 'axios';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,10 +13,11 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useState } from 'react';
 
-function Copyright(props) {
+function Copyright() {
   return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
+    <Typography variant="body2" color="text.secondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
         Your Website
@@ -28,14 +30,46 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function SignInSide() {
-  const handleSubmit = (event) => {
+export default function ResetPass() {
+
+  const [passwordError, setPasswordError] = useState(false);
+  const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
+
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    const newPassword = data.get('newPass');
+    const confirmPassword = data.get('conPassword');
+
+    if (newPassword !== confirmPassword) {
+      setPasswordError(true);
+      setPasswordErrorMessage('Passwords do not match.');
+      return;
+    }
+
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    if (!passwordRegex.test(newPassword)) {
+      setPasswordError(true);
+      setPasswordErrorMessage(
+        'Password must contain at least 8 characters, including at least one letter and one number.'
+      );
+      return;
+    }
+
+    try {
+      const response = await axios.post('YOUR_API_ENDPOINT', {
+        newPassword,
+        confirmPassword,
+      });
+
+      console.log(response.data); // Handle the response as needed
+
+      // Additional logic after successful password reset
+
+    } catch (error) {
+      console.error(error); // Handle the error
+    }
   };
 
   return (
@@ -50,8 +84,8 @@ export default function SignInSide() {
           sx={{
             backgroundImage: 'url(https://source.unsplash.com/random)',
             backgroundRepeat: 'no-repeat',
-            backgroundColor: (t) =>
-              t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
+            backgroundColor: (theme) =>
+              theme.palette.mode === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
@@ -59,7 +93,7 @@ export default function SignInSide() {
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
           <Box
             sx={{
-              my: 32,
+              my: 35,
               mx: 4,
               display: 'flex',
               flexDirection: 'column',
@@ -70,28 +104,29 @@ export default function SignInSide() {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Reset-Password
+              Reset Password
             </Typography>
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
               <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                autoFocus
-              />
-              <TextField
-                margin="normal"
                 required
                 fullWidth
                 name="password"
                 label="Password"
                 type="password"
                 id="password"
-                autoComplete="current-password"
+                autoComplete="new-password"
+                error={passwordError}
+                helperText={passwordErrorMessage}
+              />
+              <TextField
+                required
+                fullWidth
+                name="confirmPassword"
+                label="Confirm Password"
+                type="password"
+                id="confirmPassword"
+                autoComplete="confirm-password"
+                error={passwordError}
               />
               <Button
                 type="submit"
@@ -101,7 +136,7 @@ export default function SignInSide() {
               >
                 Confirm
               </Button>
-              <Copyright sx={{ mt: 5 }} />
+              <Copyright />
             </Box>
           </Box>
         </Grid>

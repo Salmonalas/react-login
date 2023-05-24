@@ -14,38 +14,29 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-function SignUp() {
-  const [passwordError, setPasswordError] = useState(false);
-  const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
+function Editprofile() {
+
+  const [profileImage, setProfileImage] = useState(null);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setProfileImage(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+    
     const data = new FormData(event.currentTarget);
-    const password = data.get('password');
-    const confirmPassword = data.get('confirmPassword');
-
-    if (password !== confirmPassword) {
-      setPasswordError(true);
-      setPasswordErrorMessage('Passwords do not match.');
-      return;
-    }
-
-    // Password policy validation
-    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-    if (!passwordRegex.test(password)) {
-      setPasswordError(true);
-      setPasswordErrorMessage(
-        'Password must contain at least 8 characters, including at least one letter and one number.'
-      );
-      return;
-    }
 
     const userData = {
       firstName: data.get('firstName'),
       lastName: data.get('lastName'),
       profileName: data.get('profileName'),
       email: data.get('email'),
-      password,
       phone: data.get('phone'),
     };
 
@@ -75,12 +66,11 @@ function SignUp() {
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign up
-          </Typography>
+          <div>
+            <h2>Update Profile Image</h2>
+            <input type="file" accept="image/*" onChange={handleSubmit} />
+            {profileImage && <img src={profileImage} alt="Profile" />}
+          </div>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
@@ -128,42 +118,11 @@ function SignUp() {
                 <TextField
                   required
                   fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
-                  error={passwordError}
-                  helperText={passwordErrorMessage}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="confirmPassword"
-                  label="Confirm Password"
-                  type="password"
-                  id="confirmPassword"
-                  autoComplete="confirm-password"
-                  error={passwordError}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
                   name="phone"
                   label="Phone Number"
                   type="phone"
                   id="phone"
                   autoComplete="new-phone"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="I want to receive inspiration, marketing promotions and updates via email."
                 />
               </Grid>
             </Grid>
@@ -173,14 +132,9 @@ function SignUp() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign Up
+              Save
             </Button>
             <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link href="#" variant="body2">
-                  Already have an account? Sign in
-                </Link>
-              </Grid>
             </Grid>
           </Box>
         </Box>
@@ -189,4 +143,4 @@ function SignUp() {
   );
 }
 
-export default SignUp;
+export default Editprofile;
