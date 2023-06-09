@@ -1,32 +1,73 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import React, { useState } from "react";
+import axios from "./api/axios";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import Link from "@mui/material/Link";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 function SignUp() {
   const [passwordError, setPasswordError] = useState(false);
-  const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
+  const [fnameError, setfnameError] = useState(false);
+  const [lnameError, setlnameError] = useState(false);
+  const [pnameError, setpnameError] = useState(false);
+  const [emailError, setemailError] = useState(false);
+  const [phoneError, setphoneError] = useState(false);
+
+  const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const password = data.get('password');
-    const confirmPassword = data.get('confirmPassword');
+    const password = data.get("password");
+    const confirmPassword = data.get("confirmPassword");
+
+    const userData = {
+      email: data.get("email"),
+      password,
+      fname: data.get("firstName"),
+      lname: data.get("lastName"),
+      pname: data.get("profileName"),
+      tel: data.get("phone"),
+    };
+
+    if (userData.fname.length === 0) {
+      setfnameError(true);
+    } else setfnameError(false);
+
+    if (userData.lname.length === 0) {
+      setlnameError(true);
+    } else setlnameError(false);
+
+    if(userData.pname.length === 0) {
+      setpnameError(true)
+    }else setpnameError(false)
+
+    if(userData.email.length === 0) {
+      setemailError(true)
+    }else setemailError(false)
+
+    if(userData.tel.length === 0) {
+      setphoneError(true)
+    }else setphoneError(false)
 
     if (password !== confirmPassword) {
       setPasswordError(true);
-      setPasswordErrorMessage('Passwords do not match.');
+      setPasswordErrorMessage("Passwords do not match.");
+      return;
+    }
+
+    if (password.length < 8) {
+      setPasswordError(true);
+      setPasswordErrorMessage("Password must contain at least 8 characters");
       return;
     }
 
@@ -35,26 +76,26 @@ function SignUp() {
     if (!passwordRegex.test(password)) {
       setPasswordError(true);
       setPasswordErrorMessage(
-        'Password must contain at least 8 characters, including at least one letter and one number.'
+        "Password must contain at least 8 characters, including at least one letter and one number."
       );
       return;
     }
 
-    const userData = {
-      firstName: data.get('firstName'),
-      lastName: data.get('lastName'),
-      profileName: data.get('profileName'),
-      email: data.get('email'),
-      password,
-      phone: data.get('phone'),
-    };
-
+    console.log(userData);
     try {
-      const response = await axios.post('YOUR_API_ENDPOINT', userData);
-      console.log(response.data); // Handle the response as needed
+      await axios.post("/signup", userData).then((res) => {
+        if (res.data.status === "failed") {
+          console.log(res.data);
+          // window.location.replace('/login');
+        } else if (res.data.status === "success") {
+          // setPasswordErrorMessage('success2')
+          window.location.replace("/login");
+          console.log("eiei");
+        }
+        console.log(res.data);
+      });
 
       // Additional logic after successful sign-up
-
     } catch (error) {
       console.error(error); // Handle the error
     }
@@ -70,18 +111,23 @@ function SignUp() {
           sx={{
             marginTop: 8,
             marginBottom: 0,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Box
+            component="form"
+            noValidate
+            onSubmit={handleSubmit}
+            sx={{ mt: 3 }}
+          >
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -92,6 +138,7 @@ function SignUp() {
                   id="firstName"
                   label="First Name"
                   autoFocus
+                  error={fnameError}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -102,6 +149,7 @@ function SignUp() {
                   label="Last Name"
                   name="lastName"
                   autoComplete="family-name"
+                  error={lnameError}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -112,6 +160,7 @@ function SignUp() {
                   label="Profile Name"
                   name="profileName"
                   autoComplete="profile-name"
+                  error={pnameError}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -122,6 +171,7 @@ function SignUp() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  error={emailError}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -158,11 +208,14 @@ function SignUp() {
                   type="phone"
                   id="phone"
                   autoComplete="new-phone"
+                  error={phoneError}
                 />
               </Grid>
               <Grid item xs={12}>
                 <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
+                  control={
+                    <Checkbox value="allowExtraEmails" color="primary" />
+                  }
                   label="I want to receive inspiration, marketing promotions and updates via email."
                 />
               </Grid>
@@ -177,7 +230,7 @@ function SignUp() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/login" variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>

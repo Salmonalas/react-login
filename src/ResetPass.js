@@ -1,11 +1,9 @@
 import React from 'react';
-import axios from 'axios';
+import axios from './api/axios';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
@@ -14,8 +12,10 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from 'react';
+import { useParams } from "react-router-dom";
 
-function Copyright() {
+
+function Copyright() {//ลอกเขามา
   return (
     <Typography variant="body2" color="text.secondary" align="center">
       {'Copyright © '}
@@ -31,6 +31,8 @@ function Copyright() {
 const theme = createTheme();
 
 export default function ResetPass() {
+  const { token } = useParams();
+  console.log(token);
 
   const [passwordError, setPasswordError] = useState(false);
   const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
@@ -48,25 +50,44 @@ export default function ResetPass() {
       return;
     }
 
-    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-    if (!passwordRegex.test(newPassword)) {
+    if (newPassword.length <8) {
       setPasswordError(true);
       setPasswordErrorMessage(
-        'Password must contain at least 8 characters, including at least one letter and one number.'
+        'Password must contain at least 8 characters'
       );
       return;
     }
 
+    const passwordRegex2 = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    if (!passwordRegex2.test(newPassword)) {
+      setPasswordError(true);
+      setPasswordErrorMessage(
+        'Password must including at least one letter and number.'
+      );
+      return;
+    }
+
+    setPasswordErrorMessage('success')
+
     try {
-      const response = await axios.post('YOUR_API_ENDPOINT', {
-        newPassword,
-        confirmPassword,
-      });
-
-      console.log(response.data); // Handle the response as needed
-
+      // console.log(response.data); // Handle the response as needed
+      const password = confirmPassword
+      await axios.post(`/resetpassword`, {
+        token,
+        password,
+        
+      }).then((res) => {
+        if (res.data.status === 'failed') {
+          console.log(res.data)
+          // window.location.replace('/login');
+        }
+        else if (res.data.status === 'success') {
+          // setPasswordErrorMessage('success2')
+          window.location.replace('/login')
+        }
+        console.log(res.data)
       // Additional logic after successful password reset
-
+      })
     } catch (error) {
       console.error(error); // Handle the error
     }
@@ -74,7 +95,7 @@ export default function ResetPass() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Grid container component="main" sx={{ height: '100vh' }}>
+      <Grid container component="main" sx={{ height: '92vh' }}>
         <CssBaseline />
         <Grid
           item
@@ -82,7 +103,7 @@ export default function ResetPass() {
           sm={4}
           md={7}
           sx={{
-            backgroundImage: 'url(https://source.unsplash.com/random)',
+            backgroundImage: 'url(https://source.unsplash.com/random?wallpapers)',
             backgroundRepeat: 'no-repeat',
             backgroundColor: (theme) =>
               theme.palette.mode === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
@@ -90,7 +111,7 @@ export default function ResetPass() {
             backgroundPosition: 'center',
           }}
         />
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={10} square>
           <Box
             sx={{
               my: 35,
@@ -108,26 +129,31 @@ export default function ResetPass() {
             </Typography>
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
               <TextField
+              margin="normal"
                 required
                 fullWidth
-                name="password"
+                name="newPass"
                 label="Password"
                 type="password"
-                id="password"
+                id="newPass"
                 autoComplete="new-password"
                 error={passwordError}
-                helperText={passwordErrorMessage}
               />
               <TextField
+              margin="normal"
                 required
                 fullWidth
-                name="confirmPassword"
+                name="conPassword"
                 label="Confirm Password"
                 type="password"
-                id="confirmPassword"
+                id="conPassword"
                 autoComplete="confirm-password"
                 error={passwordError}
               />
+                <div>
+                  {passwordErrorMessage}
+                </div>
+                
               <Button
                 type="submit"
                 fullWidth

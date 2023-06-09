@@ -1,7 +1,7 @@
 .NavbarItems {
-    background: linear-gradient(90deg, rgba(110, 94, 254) 0%, rgba(73, 63, 252, 1) 100%);
+    background: linear-gradient(90deg, rgba(110, 94, 254) 0%, rgb(168, 104, 194) 100%);
     height: 80px;
-    display : flex;
+    display: flex;
     justify-content: center;
     align-items: center;
     font-size: 1.2rem;
@@ -31,7 +31,7 @@
 }
 
 .nav-links {
-    color: #fff;
+    color: #000000;
     text-decoration: none;
     padding: 0.5rem 1rem;
 }
@@ -42,16 +42,47 @@
     transition: all 0.2s ease-out;
 }
 
-.fa-bars {
+/* .fa-bars {
     color: #fff;
-}
+} */
 
-.nav-links-mobile {
+/* .nav-links-mobile {
     display: none;
-}
+} */
 
 .menu-icon {
     display: none;
+}
+
+.nav-links-mobile {
+    /* display: block; */
+    text-align: center;
+    padding: 0.5rem 1rem;
+    margin: 3rem auto;
+    border-radius: 4px;
+    width: 80%;
+    background: #ffffff;
+    text-decoration: none;
+    /* color: #6d76f7; */
+    color: #000000;
+    font-size: 1rem;
+}
+
+.nav-links-mobile:hover {
+    background: #adb6ff;
+    /* color: #6568f4; */
+    color: #000000;
+    transition: 250ms;
+}
+
+.mymt13{
+    margin-top: 1.3rem;
+}
+.mymt1{
+    margin-top: 1rem;
+}
+.myml{
+    margin-left: 3rem
 }
 
 @media screen and (max-width: 960px) {
@@ -79,17 +110,18 @@
         z-index: 1;
     }
 
+    
     .nav-links {
         text-align: center;
         padding: 2rem;
         width: 100%;
-        display: table;
+        display:table;
     }
 
     .nav-links:hover {
-        background-color: #7577fa;
+        background-color: #ffffff;
     }
-
+    
     .navbar-logo {
         position: absolute;
         top: 0;
@@ -106,38 +138,21 @@
         font-size: 1.8rem;
         cursor: pointer;
     }
-
+    
     .fa-times {
         color: #fff;
         font-size: 2rem;
     }
 
-    .nav-links-mobile {
-        display: block;
-        text-align: center;
-        padding: 1.5rem;
-        margin: 2rem auto;
-        border-radius: 4px;
-        width: 80%;
-        background: #4ad9e4;
-        text-decoration: none;
-        color: #fff;
-        font-size: 1.5rem;
-    }
 
-    .nav-links-mobile:hover {
-        background: #fff;
-        color: #6568f4;
-        transition: 250ms;
-    }
 
-    button {
+    /* button {
         display: none;
-    }
+    } */
 }
-    
 
-/*nav {
+
+nav {
     display : flex;
     align-items: center;
     justify-content: space-between;
@@ -182,4 +197,4 @@
     position: absolute;
     bottom: -4px;
     left: 20px;
-}*/
+}

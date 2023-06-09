@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import axios from "./api/axios";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
@@ -15,6 +13,7 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 function SignInSide() {
+
   const [error, setError] = useState('');
 
   const handleSubmit = async (event) => {
@@ -23,14 +22,28 @@ function SignInSide() {
     const email = data.get('email');
     const password = data.get('password');
 
-    try {
-      const response = await axios.post('YOUR_API_ENDPOINT', { email, password });
-      console.log(response.data); // Handle the response as needed
+    if (email.length === 0||password.length === 0) {
+      setError('Please complete the information')
+      return
+    }
 
-      // Additional logic after successful sign-in
+    try {
+      await axios.post('/signin', { email, password }).then((res) => {
+        if (res.data.status === 'failed') {
+          setError('Invalid email or password.');
+        }
+        else if(res.data.status === 'unverified') {
+          setError('Please verify your email, check your mailbox');
+        }
+        else if (res.data.status === 'success') {
+          localStorage.setItem('token', res.data.token);
+          window.location.replace('/') // ไปหน้าที่ต้องการ
+        }
+        console.log(res.data); // Handle the response as needed
+      });
 
     } catch (error) {
-      console.error(error); // Handle the error
+      console.log(error); // Handle the error
       setError('Invalid email or password.'); // Set error message
     }
   };
@@ -39,7 +52,8 @@ function SignInSide() {
 
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Grid container component="main" sx={{ height: '100vh' }}>
+      
+      <Grid container component="main" sx={{ height: '92vh' }}>
         <CssBaseline />
         <Grid
           item
@@ -55,10 +69,10 @@ function SignInSide() {
             backgroundPosition: 'center',
           }}
         />
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={10} square>
           <Box
             sx={{
-              my: 8,
+              my: 30,
               mx: 4,
               display: 'flex',
               flexDirection: 'column',
@@ -92,29 +106,24 @@ function SignInSide() {
                 id="password"
                 autoComplete="current-password"
               />
-              {error && (
-                <Typography color="error" align="center" sx={{ mt: 1 }}>
-                  {error}
-                </Typography>
-              )}
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
+              <Typography color="error" align="center" sx={{ mt: 1 }}>
+                {error}
+              </Typography>
               <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
                 Sign In
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link href="#" variant="body2">
+                  <Link href="/forget" variant="body2">
                     Forgot password?
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link href="#" variant="body2">
+                  <Link href="/register" variant="body2">
                     {"Don't have an account? Sign Up"}
                   </Link>
                 </Grid>
+
               </Grid>
             </Box>
           </Box>

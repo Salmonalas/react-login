@@ -1,5 +1,5 @@
 .cards {
-    padding: 4rem;
+    padding: 1rem;
     background: none;
 }
 
@@ -257,8 +257,3 @@
     text-shadow: none;
     background-color: var(--color-secondary);
   } */
-
-  .myml{
-    margin-left:10px;
-    margin-right: 10px;
-  }

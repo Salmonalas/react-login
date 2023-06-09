@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./contents.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -7,6 +7,7 @@ import {
   faVideo,
   faGamepad,
   faGraduationCap,
+  faBorderAll
 } from "@fortawesome/free-solid-svg-icons";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -16,9 +17,11 @@ import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import { Icon } from "semantic-ui-react";
 //import "./contentbar.css";
 //import axios from '../../api/axios-work';
 import axios from "./api/axios";
+import AuthContext from "./context/AuthProvider";
 
 const Contents = (props) => {
   //   const [selectedMenu, setSelectedMenu] = useState({
@@ -27,8 +30,31 @@ const Contents = (props) => {
   //     gaming: false,
   //     education: false,
   //   });
+  const { auth } = useContext(AuthContext);
+  console.log(auth);
 
-  const [showWorkFreelance, setShowWorkFreelance] = useState([]);
+  const [showDesign, setshowDesign] = useState([]);
+
+  useEffect(() => {
+    onFirstLoad();
+  }, []);
+
+  const onFirstLoad = () => {
+    axios.get("/All-Design").then((res) => {
+      console.log(res.data);
+      let data = res.data.data.map((Item) => {
+        return {
+          // design_id: Item.d_ID,
+          design_Name: Item.d_Name,
+          num_of_fav: Item.d_NumFavorite,
+          ex_image: Item.d_IMG,
+          path: `/design/${Item.d_ID}`,
+        };
+      });
+      setshowDesign(data);
+      console.log(data);
+    });
+  };
 
   const onClickSocial = () => {
     // setSelectedMenu({
@@ -49,7 +75,7 @@ const Contents = (props) => {
           path: `/design/${Item.d_ID}`,
         };
       });
-      setShowWorkFreelance(data);
+      setshowDesign(data);
       console.log(data);
     });
   };
@@ -73,7 +99,7 @@ const Contents = (props) => {
           path: `/design/${Item.d_ID}`,
         };
       });
-      setShowWorkFreelance(data);
+      setshowDesign(data);
       console.log(data);
     });
   };
@@ -97,7 +123,7 @@ const Contents = (props) => {
           path: `/design/${Item.d_ID}`,
         };
       });
-      setShowWorkFreelance(data);
+      setshowDesign(data);
       console.log(data);
     });
   };
@@ -121,16 +147,16 @@ const Contents = (props) => {
           path: `/design/${Item.d_ID}`,
         };
       });
-      setShowWorkFreelance(data);
+      setshowDesign(data);
       console.log(data);
     });
   };
 
   let showContent = <></>;
   showContent = (
-    <Container sx={{ py: 8 }} maxWidth="md">
+    <Container sx={{ py: 2 }} maxWidth="md">
       <Grid container spacing={4}>
-        {showWorkFreelance.map((Item, index) => (
+        {showDesign.map((Item, index) => (
           <Grid item key={index} xs={12} sm={6} md={4}>
             <Link to={Item.path}>
               <Card
@@ -153,16 +179,19 @@ const Contents = (props) => {
                     {Item.design_Name}
                   </Typography>
                   <Typography>
-                    This is a media card. You can use this section to describe
-                    the content. {Item.num_of_fav}
+                    ตัวอย่างการออกแบบ ที่ได้มาจากการสอบถามกลุ่มตัวอย่าง
                   </Typography>
                 </CardContent>
-                <CardActions>
+                {/* <CardActions>
                   <Link to={"/register"}>
                     <Button size="small">View</Button>
                   </Link>
                   <Button size="small">Edit</Button>
-                </CardActions>
+                </CardActions> */}
+                <CardContent extra>
+                  <Icon name="heart" color="red" />
+                  {Item.num_of_fav} Favorites
+                </CardContent>
               </Card>
             </Link>
           </Grid>
@@ -177,7 +206,20 @@ const Contents = (props) => {
         {" "}
         <div className="cardbar-container">
           <div>
+            
             <div className="multi-button ">
+              <button
+                // className={
+                // 	selectedMenu.social
+                // 		? "Holdbutton"
+                // 		: "UnHoldbutton"
+                // }
+                onClick={onFirstLoad}
+              >
+                <FontAwesomeIcon icon={faBorderAll} size="xl" />
+                <h5>All Design</h5>
+              </button>
+
               <button
                 // className={
                 // 	selectedMenu.social
