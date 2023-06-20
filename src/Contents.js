@@ -7,33 +7,23 @@ import {
   faVideo,
   faGamepad,
   faGraduationCap,
-  faBorderAll
+  faBorderAll,
 } from "@fortawesome/free-solid-svg-icons";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Grid from "@mui/material/Grid";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { Icon } from "semantic-ui-react";
-//import "./contentbar.css";
-//import axios from '../../api/axios-work';
 import axios from "./api/axios";
 import AuthContext from "./context/AuthProvider";
 
-const Contents = (props) => {
-  //   const [selectedMenu, setSelectedMenu] = useState({
-  //     social: false,
-  //     streaming: false,
-  //     gaming: false,
-  //     education: false,
-  //   });
-  const { auth } = useContext(AuthContext);
-  console.log(auth);
+const Contents = () => {
+  // const { auth } = useContext(AuthContext);
+  // console.log(auth);
 
   const [showDesign, setshowDesign] = useState([]);
+  const [categories, setcategories] = useState([""]);
 
   useEffect(() => {
     onFirstLoad();
@@ -43,13 +33,37 @@ const Contents = (props) => {
     axios.get("/All-Design").then((res) => {
       console.log(res.data);
       let data = res.data.data.map((Item) => {
-        return {
-          // design_id: Item.d_ID,
-          design_Name: Item.d_Name,
-          num_of_fav: Item.d_NumFavorite,
-          ex_image: Item.d_IMG,
-          path: `/design/${Item.d_ID}`,
-        };
+        if (Item.c_ID === 10) {
+          // setcategories('social')
+          // console.log(categories);
+          return {
+            design_Name: Item.d_Name,
+            num_of_fav: Item.d_NumFavorite,
+            ex_image: Item.d_ExIMG,
+            path: `social/${Item.d_ID}`,
+          };
+        } else if (Item.c_ID === 20) {
+          return {
+            design_Name: Item.d_Name,
+            num_of_fav: Item.d_NumFavorite,
+            ex_image: Item.d_ExIMG,
+            path: `streaming/${Item.d_ID}`,
+          };
+        } else if (Item.c_ID === 30) {
+          return {
+            design_Name: Item.d_Name,
+            num_of_fav: Item.d_NumFavorite,
+            ex_image: Item.d_ExIMG,
+            path: `gaming/${Item.d_ID}`,
+          };
+        } else if (Item.c_ID === 40) {
+          return {
+            design_Name: Item.d_Name,
+            num_of_fav: Item.d_NumFavorite,
+            ex_image: Item.d_ExIMG,
+            path: `education/${Item.d_ID}`,
+          };
+        }
       });
       setshowDesign(data);
       console.log(data);
@@ -57,22 +71,14 @@ const Contents = (props) => {
   };
 
   const onClickSocial = () => {
-    // setSelectedMenu({
-    // 	social: true,
-    // 	streaming: false,
-    // 	gaming: false,
-    // 	education: false,
-    // });
-
     axios.get(`/All-Social-Design`).then((res) => {
       console.log(res.data);
       let data = res.data.data.map((Item) => {
         return {
-          // design_id: Item.d_ID,
           design_Name: Item.d_Name,
           num_of_fav: Item.d_NumFavorite,
-          ex_image: Item.d_IMG,
-          path: `/design/${Item.d_ID}`,
+          ex_image: Item.d_ExIMG,
+          path: `social/${Item.d_ID}`,
         };
       });
       setshowDesign(data);
@@ -81,22 +87,14 @@ const Contents = (props) => {
   };
 
   const onClickStreaming = () => {
-    // setSelectedMenu({
-    // 	social: false,
-    // 	streaming: true,
-    // 	gaming: false,
-    // 	education: false,
-    // });
-
     axios.get(`/All-Streaming-Design`).then((res) => {
       console.log(res.data);
       let data = res.data.data.map((Item) => {
         return {
-          // design_id: Item.d_ID,
           design_Name: Item.d_Name,
           num_of_fav: Item.d_NumFavorite,
-          ex_image: Item.d_IMG,
-          path: `/design/${Item.d_ID}`,
+          ex_image: Item.d_ExIMG,
+          path: `streaming/${Item.d_ID}`,
         };
       });
       setshowDesign(data);
@@ -105,22 +103,14 @@ const Contents = (props) => {
   };
 
   const onClickGaming = () => {
-    // setSelectedMenu({
-    // 	social: false,
-    // 	streaming: false,
-    // 	gaming: true,
-    // 	education: false,
-    // });
-
     axios.get(`/All-Gaming-Design`).then((res) => {
       console.log(res.data);
       let data = res.data.data.map((Item) => {
         return {
-          // design_id: Item.d_ID,
           design_Name: Item.d_Name,
           num_of_fav: Item.d_NumFavorite,
-          ex_image: Item.d_IMG,
-          path: `/design/${Item.d_ID}`,
+          ex_image: Item.d_ExIMG,
+          path: `gaming/${Item.d_ID}`,
         };
       });
       setshowDesign(data);
@@ -129,22 +119,14 @@ const Contents = (props) => {
   };
 
   const onClickEducation = () => {
-    // setSelectedMenu({
-    // 	social: false,
-    // 	streaming: false,
-    // 	gaming: false,
-    // 	education: true,
-    // });
-
     axios.get(`/All-Education-Design`).then((res) => {
       console.log(res.data);
       let data = res.data.data.map((Item) => {
         return {
-          // design_id: Item.d_ID,
           design_Name: Item.d_Name,
           num_of_fav: Item.d_NumFavorite,
-          ex_image: Item.d_IMG,
-          path: `/design/${Item.d_ID}`,
+          ex_image: Item.d_ExIMG,
+          path: `education/${Item.d_ID}`,
         };
       });
       setshowDesign(data);
@@ -182,16 +164,6 @@ const Contents = (props) => {
                     ตัวอย่างการออกแบบ ที่ได้มาจากการสอบถามกลุ่มตัวอย่าง
                   </Typography>
                 </CardContent>
-                {/* <CardActions>
-                  <Link to={"/register"}>
-                    <Button size="small">View</Button>
-                  </Link>
-                  <Button size="small">Edit</Button>
-                </CardActions> */}
-                <CardContent extra>
-                  <Icon name="heart" color="red" />
-                  {Item.num_of_fav} Favorites
-                </CardContent>
               </Card>
             </Link>
           </Grid>
@@ -206,64 +178,28 @@ const Contents = (props) => {
         {" "}
         <div className="cardbar-container">
           <div>
-            
             <div className="multi-button ">
-              <button
-                // className={
-                // 	selectedMenu.social
-                // 		? "Holdbutton"
-                // 		: "UnHoldbutton"
-                // }
-                onClick={onFirstLoad}
-              >
+              <button onClick={onFirstLoad}>
                 <FontAwesomeIcon icon={faBorderAll} size="xl" />
                 <h5>All Design</h5>
               </button>
 
-              <button
-                // className={
-                // 	selectedMenu.social
-                // 		? "Holdbutton"
-                // 		: "UnHoldbutton"
-                // }
-                onClick={onClickSocial}
-              >
+              <button onClick={onClickSocial}>
                 <FontAwesomeIcon icon={faGlobe} size="xl" />
                 <h5>Social Media</h5>
               </button>
 
-              <button
-                // className={
-                // 	selectedMenu.streaming
-                // 		? "Holdbutton"
-                // 		: "UnHoldbutton"
-                // }
-                onClick={onClickStreaming}
-              >
+              <button onClick={onClickStreaming}>
                 <FontAwesomeIcon icon={faVideo} size="xl" />
                 <h5>Streaming</h5>
               </button>
 
-              <button
-                // className={
-                // 	selectedMenu.gaming
-                // 		? "Holdbutton"
-                // 		: "UnHoldbutton"
-                // }
-                onClick={onClickGaming}
-              >
+              <button onClick={onClickGaming}>
                 <FontAwesomeIcon icon={faGamepad} size="xl" />
                 <h5>Gaming</h5>
               </button>
 
-              <button
-                // className={
-                // 	selectedMenu.education
-                // 		? "Holdbutton"
-                // 		: "UnHoldbutton"
-                // }
-                onClick={onClickEducation}
-              >
+              <button onClick={onClickEducation}>
                 <FontAwesomeIcon icon={faGraduationCap} size="xl" />{" "}
                 <h5>Education</h5>
               </button>

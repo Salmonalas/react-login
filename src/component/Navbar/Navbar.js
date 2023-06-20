@@ -62,7 +62,7 @@ const Navbar = (isLoggedIn) => {
             href="/login"
             onClick={handleLogout}
           >
-            Sign Out
+            ออกจากระบบ
           </a>
         </li>
         
@@ -85,12 +85,12 @@ const Navbar = (isLoggedIn) => {
 
         <li>
           <a className="nav-links" href="/login">
-            Sign In
+            เข้าสู่ระบบ
           </a>
         </li>
         <li>
           <a className="nav-links-mobile " href="/register">
-            Sign Up
+            สมัครสมาชิก
           </a>
         </li>
       </ul>

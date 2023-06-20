@@ -1,11 +1,29 @@
-.mymt50{
+.mymt50 {
     margin-top: 50px;
 }
 
-.mymt80{
+.mymt80 {
     margin-top: 80px;
 }
 
-.mymb20{
+.mymb20 {
     margin-bottom: 20px;
+}
+
+.mymt10 {
+    margin-top: 10px;
+}
+
+.mycenter {
+    display: flex;
+    /* align-items: center; */
+    justify-content: center;
+}
+
+.mybackbtn {
+    /* margin-top: 50px;
+    margin-left: 200px; */
+    margin-top: 2%;
+    margin-left: 10.5%;
+    display: flex;
 }
