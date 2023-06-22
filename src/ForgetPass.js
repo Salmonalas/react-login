@@ -4,7 +4,6 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -32,13 +31,11 @@ function Forgot() {
         } else if (res.data.status === "success") {
           localStorage.setItem("token", res.data.token);
           setstatus("Please Check Your Email");
-          // window.location.replace('/')
         }
-        console.log(res.data); // Handle the response as needed
       });
     } catch (error) {
-      console.log(error); // Handle the error
-      setstatus("Account Not Found!"); // Set error message
+      console.log(error); 
+      setstatus("Account Not Found!");
     }
   };
 
@@ -127,14 +124,6 @@ function Forgot() {
               </Grid>
             </Box>
           </Box>
-          {/* <Typography variant="body2" color="text.secondary" align="center">
-            {"Copyright © "}
-            <Link color="inherit" href="/">
-              Designprinted
-            </Link>{" "}
-            {new Date().getFullYear()}
-            {"."}
-          </Typography> */}
         </Grid>
       </Grid>
     </ThemeProvider>

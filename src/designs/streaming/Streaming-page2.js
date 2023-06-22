@@ -11,9 +11,6 @@ const Design = () => {
   const realToken = localStorage.getItem("token");
   axios.defaults.headers.common["authorization"] = `Bearer ${realToken}`;
 
-  const [showNumFav, setshowNumFav] = useState({
-    num_of_fav: 0,
-  });
   const [colorIcon1, setcolorIcon1] = useState({
     color: "",
     isFav: false,
@@ -34,7 +31,6 @@ const Design = () => {
   const loaddata = async () => {
     try {
       await axios.get(`/contents-islike`).then((res) => {
-        console.log(res.data.result.length);
         if (res.data.status === "success") {
           for (let i = 0; i < res.data.result.length; i++) {
             if (res.data.result[i].ct_ID === 21101) {
@@ -68,15 +64,8 @@ const Design = () => {
 
   const handleClickSide = async () => {
     let id = 21101;
-    // handleClick(id)
     let isFav = colorIcon1.isFav;
-    console.log(isFav);
-    // console.log(id);
     try {
-      console.log({
-        id,
-        isFav,
-      });
       await axios
         .post("/design/like", {
           id,
@@ -84,7 +73,6 @@ const Design = () => {
         })
         .then((res) => {
           if (res.data.status === "failed") {
-            console.log(res.data);
             window.location.replace("/login");
           } else if (res.data.status === "success") {
             if (res.data.isFav) {
@@ -92,22 +80,13 @@ const Design = () => {
                 color: "youtube",
                 isFav: true,
               });
-              setshowNumFav({
-                num_of_fav: res.data.num_of_fav[0].d_NumFavorite,
-              });
             } else {
               setcolorIcon1({
                 color: "",
                 isFav: false,
               });
-              setshowNumFav({
-                num_of_fav: res.data.num_of_fav[0].d_NumFavorite,
-              });
             }
-            // console.log(com);
-            // window.location.reload();
           }
-          console.log(res);
         });
     } catch (error) {
       console.error("Error adding comment:", error);
@@ -115,15 +94,8 @@ const Design = () => {
   };
   const handleClickSearch = async () => {
     let id = 21102;
-    // handleClick(id)
     let isFav = colorIcon2.isFav;
-    console.log(isFav);
-    // console.log(id);
     try {
-      console.log({
-        id,
-        isFav,
-      });
       await axios
         .post("/design/like", {
           id,
@@ -131,7 +103,6 @@ const Design = () => {
         })
         .then((res) => {
           if (res.data.status === "failed") {
-            console.log(res.data);
             window.location.replace("/login");
           } else if (res.data.status === "success") {
             if (res.data.isFav) {
@@ -139,22 +110,13 @@ const Design = () => {
                 color: "youtube",
                 isFav: true,
               });
-              setshowNumFav({
-                num_of_fav: res.data.num_of_fav[0].d_NumFavorite,
-              });
             } else {
               setcolorIcon2({
                 color: "",
                 isFav: false,
               });
-              setshowNumFav({
-                num_of_fav: res.data.num_of_fav[0].d_NumFavorite,
-              });
             }
-            // console.log(com);
-            // window.location.reload();
           }
-          console.log(res);
         });
     } catch (error) {
       console.error("Error adding comment:", error);
@@ -162,15 +124,8 @@ const Design = () => {
   };
   const handleClickLive = async () => {
     let id = 21201;
-    // handleClick(id)
     let isFav = colorIcon3.isFav;
-    console.log(isFav);
-    // console.log(id);
     try {
-      console.log({
-        id,
-        isFav,
-      });
       await axios
         .post("/design/like", {
           id,
@@ -178,7 +133,6 @@ const Design = () => {
         })
         .then((res) => {
           if (res.data.status === "failed") {
-            console.log(res.data);
             window.location.replace("/login");
           } else if (res.data.status === "success") {
             if (res.data.isFav) {
@@ -186,22 +140,13 @@ const Design = () => {
                 color: "youtube",
                 isFav: true,
               });
-              setshowNumFav({
-                num_of_fav: res.data.num_of_fav[0].d_NumFavorite,
-              });
             } else {
               setcolorIcon3({
                 color: "",
                 isFav: false,
               });
-              setshowNumFav({
-                num_of_fav: res.data.num_of_fav[0].d_NumFavorite,
-              });
             }
-            // console.log(com);
-            // window.location.reload();
           }
-          console.log(res);
         });
     } catch (error) {
       console.error("Error adding comment:", error);
@@ -209,15 +154,8 @@ const Design = () => {
   };
   const handleClickRecommend = async () => {
     let id = 21202;
-    // handleClick(id)
     let isFav = colorIcon4.isFav;
-    console.log(isFav);
-    // console.log(id);
     try {
-      console.log({
-        id,
-        isFav,
-      });
       await axios
         .post("/design/like", {
           id,
@@ -225,7 +163,6 @@ const Design = () => {
         })
         .then((res) => {
           if (res.data.status === "failed") {
-            console.log(res.data);
             window.location.replace("/login");
           } else if (res.data.status === "success") {
             if (res.data.isFav) {
@@ -233,22 +170,13 @@ const Design = () => {
                 color: "youtube",
                 isFav: true,
               });
-              setshowNumFav({
-                num_of_fav: res.data.num_of_fav[0].d_NumFavorite,
-              });
             } else {
               setcolorIcon4({
                 color: "",
                 isFav: false,
               });
-              setshowNumFav({
-                num_of_fav: res.data.num_of_fav[0].d_NumFavorite,
-              });
             }
-            // console.log(com);
-            // window.location.reload();
           }
-          console.log(res);
         });
     } catch (error) {
       console.error("Error adding comment:", error);
@@ -269,28 +197,22 @@ const Design = () => {
                 src={"http://127.0.0.1:3333/images/Streaming_Sidebar.png"}
               />
             }
-            flowing
+            wide='very'
             hoverable
             position="right center"
           >
             <Grid centered divided>
               <Grid.Column textAlign="center">
-                <Header as="h4">Basic Plan</Header>
+              <Header as="h4">Sidebar </Header>
                 <p>
-                  <b>1</b> คำอธิบายยยยยยยยยยยยยยยยยยยยยยยยยยยย
+                  <b>Sidebar: </b> เพื่อการนำทางที่ครอบคลุมและเข้าถึงได้ง่าย ช่วยให้ผู้ใช้สามารถสำรวจพื้นที่ต่าง ๆ 
+                  ของแพลตฟอร์ม แถบด้านข้างช่วยให้แน่ใจว่าฟีเจอร์หลักและฟังก์ชันต่างๆ พร้อมใช้งานในขณะที่ผู้ใช้รับชมและโต้ตอบกับสตรีมเมอร์
                 </p>
                 <Button
                   onClick={handleClickSide}
-                  // floated="right"
                   content="Like"
                   icon="heart"
                   color={colorIcon1.color}
-                  label={{
-                    as: "a",
-                    basic: true,
-                    // content: `${showNumFav.num_of_fav}`,
-                  }}
-                  labelPosition="right"
                 />
               </Grid.Column>
             </Grid>
@@ -304,28 +226,21 @@ const Design = () => {
                   src={"http://127.0.0.1:3333/images/Streaming_Search.png"}
                 />
               }
-              flowing
+              wide
               hoverable
               position="bottom center"
             >
               <Grid centered divided>
                 <Grid.Column textAlign="center">
-                  <Header as="h4">Basic Plan</Header>
+                <Header as="h4">Search Bar </Header>
                   <p>
-                    <b>2</b> คำอธิบายยยยยยยยยยยยยยยยยยยยยยยยยยยย
+                    <b>Search Bar: </b> การจัดวางไว้บนสุดเพื่อการเข้าถึงง่ายและความเคยชินของผู้ใช้
                   </p>
                   <Button
                     onClick={handleClickSearch}
-                    // floated="right"
                     content="Like"
                     icon="heart"
                     color={colorIcon2.color}
-                    label={{
-                      as: "a",
-                      basic: true,
-                      // content: `${showNumFav.num_of_fav}`,
-                    }}
-                    labelPosition="right"
                   />
                 </Grid.Column>
               </Grid>
@@ -339,28 +254,23 @@ const Design = () => {
                     src={"http://127.0.0.1:3333/images/Streaming_Live-Chat.png"}
                   />
                 }
-                flowing
+                wide='very'
                 hoverable
-                position="right center"
+                position="bottom center"
               >
                 <Grid centered divided>
                   <Grid.Column textAlign="center">
-                    <Header as="h4">Basic Plan</Header>
+                  <Header as="h4">Live</Header>
                     <p>
-                      <b>1</b> คำอธิบายยยยยยยยยยยยยยยยยยยยยยยยยยยย
+                      <b>Live: </b> การวางวิดีโอไว้ตรงกลางหน้าจอทำให้อยู่ในตำแหน่งที่โดดเด่นและอยู่ตรงกลาง 
+                      ตำแหน่งนี้เหมาะสำหรับการรักษาโฟกัสที่ตาบนเนื้อหา เนื่องจากดวงตาจะถูกดึงไปที่กึ่งกลางของหน้าจอ 
+                      ช่วยให้ผู้ชมมีส่วนร่วมกับเนื้อหาสตรีมสดโดยไม่เสียสมาธิ และดูได้ง่าย
                     </p>
                     <Button
                       onClick={handleClickLive}
-                      // floated="right"
                       content="Like"
                       icon="heart"
                       color={colorIcon3.color}
-                      label={{
-                        as: "a",
-                        basic: true,
-                        // content: `${showNumFav.num_of_fav}`,
-                      }}
-                      labelPosition="right"
                     />
                   </Grid.Column>
                 </Grid>
@@ -375,28 +285,23 @@ const Design = () => {
                   src={"http://127.0.0.1:3333/images/Streaming_Description.png"}
                 />
               }
-              flowing
+              wide='very'
               hoverable
               position="top center"
             >
               <Grid centered divided>
                 <Grid.Column textAlign="center">
-                  <Header as="h4">Basic Plan</Header>
+                  <Header as="h4">Description </Header>
                   <p>
-                    <b>1</b> คำอธิบายยยยยยยยยยยยยยยยยยยยยยยยยยยย
+                    <b>Description: </b> : การวางแผงคำอธิบายใต้สตรีมแบบสดช่วยให้ผู้ชมมองเห็นได้ง่าย 
+                    ทำให้ผู้ชมมีส่วนร่วมกับสตรีมก่อนที่จะสำรวจข้อมูลเพิ่มเติม และยังช่วยดึงความสนใจไปที่เนื้อหาแบบเรียลไทม์ 
+                    โดยไม่ขัดขวางการสตรีมแบบสด
                   </p>
                   <Button
                     onClick={handleClickRecommend}
-                    // floated="right"
                     content="Like"
                     icon="heart"
                     color={colorIcon4.color}
-                    label={{
-                      as: "a",
-                      basic: true,
-                      // content: `${showNumFav.num_of_fav}`,
-                    }}
-                    labelPosition="right"
                   />
                 </Grid.Column>
               </Grid>

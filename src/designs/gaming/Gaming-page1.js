@@ -11,9 +11,6 @@ const Design = () => {
   const realToken = localStorage.getItem("token");
   axios.defaults.headers.common["authorization"] = `Bearer ${realToken}`;
 
-  const [showNumFav, setshowNumFav] = useState({
-    num_of_fav: 0,
-  });
   const [colorIcon1, setcolorIcon1] = useState({
     color: "",
     isFav: false,
@@ -38,7 +35,6 @@ const Design = () => {
   const loaddata = async () => {
     try {
       await axios.get(`/contents-islike`).then((res) => {
-        console.log(res.data.result.length);
         if (res.data.status === "success") {
           for (let i = 0; i < res.data.result.length; i++) {
             if (res.data.result[i].ct_ID === 31101) {
@@ -79,13 +75,7 @@ const Design = () => {
     let id = 31101;
     // handleClick(id)
     let isFav = colorIcon1.isFav;
-    console.log(isFav);
-    // console.log(id);
     try {
-      console.log({
-        id,
-        isFav,
-      });
       await axios
         .post("/design/like", {
           id,
@@ -93,7 +83,6 @@ const Design = () => {
         })
         .then((res) => {
           if (res.data.status === "failed") {
-            console.log(res.data);
             window.location.replace("/login");
           } else if (res.data.status === "success") {
             if (res.data.isFav) {
@@ -101,22 +90,13 @@ const Design = () => {
                 color: "youtube",
                 isFav: true,
               });
-              setshowNumFav({
-                num_of_fav: res.data.num_of_fav[0].d_NumFavorite,
-              });
             } else {
               setcolorIcon1({
                 color: "",
                 isFav: false,
               });
-              setshowNumFav({
-                num_of_fav: res.data.num_of_fav[0].d_NumFavorite,
-              });
             }
-            // console.log(com);
-            // window.location.reload();
           }
-          console.log(res);
         });
     } catch (error) {
       console.error("Error adding comment:", error);
@@ -124,15 +104,8 @@ const Design = () => {
   };
   const handleClickAds = async () => {
     let id = 31102;
-    // handleClick(id)
     let isFav = colorIcon2.isFav;
-    console.log(isFav);
-    // console.log(id);
     try {
-      console.log({
-        id,
-        isFav,
-      });
       await axios
         .post("/design/like", {
           id,
@@ -140,7 +113,6 @@ const Design = () => {
         })
         .then((res) => {
           if (res.data.status === "failed") {
-            console.log(res.data);
             window.location.replace("/login");
           } else if (res.data.status === "success") {
             if (res.data.isFav) {
@@ -148,22 +120,13 @@ const Design = () => {
                 color: "youtube",
                 isFav: true,
               });
-              setshowNumFav({
-                num_of_fav: res.data.num_of_fav[0].d_NumFavorite,
-              });
             } else {
               setcolorIcon2({
                 color: "",
                 isFav: false,
               });
-              setshowNumFav({
-                num_of_fav: res.data.num_of_fav[0].d_NumFavorite,
-              });
             }
-            // console.log(com);
-            // window.location.reload();
           }
-          console.log(res);
         });
     } catch (error) {
       console.error("Error adding comment:", error);
@@ -171,15 +134,8 @@ const Design = () => {
   };
   const handleClickNews = async () => {
     let id = 31103;
-    // handleClick(id)
     let isFav = colorIcon3.isFav;
-    console.log(isFav);
-    // console.log(id);
     try {
-      console.log({
-        id,
-        isFav,
-      });
       await axios
         .post("/design/like", {
           id,
@@ -187,7 +143,6 @@ const Design = () => {
         })
         .then((res) => {
           if (res.data.status === "failed") {
-            console.log(res.data);
             window.location.replace("/login");
           } else if (res.data.status === "success") {
             if (res.data.isFav) {
@@ -195,22 +150,13 @@ const Design = () => {
                 color: "youtube",
                 isFav: true,
               });
-              setshowNumFav({
-                num_of_fav: res.data.num_of_fav[0].d_NumFavorite,
-              });
             } else {
               setcolorIcon3({
                 color: "",
                 isFav: false,
               });
-              setshowNumFav({
-                num_of_fav: res.data.num_of_fav[0].d_NumFavorite,
-              });
             }
-            // console.log(com);
-            // window.location.reload();
           }
-          console.log(res);
         });
     } catch (error) {
       console.error("Error adding comment:", error);
@@ -218,15 +164,8 @@ const Design = () => {
   };
   const handleClickGame = async () => {
     let id = 31104;
-    // handleClick(id)
     let isFav = colorIcon4.isFav;
-    console.log(isFav);
-    // console.log(id);
     try {
-      console.log({
-        id,
-        isFav,
-      });
       await axios
         .post("/design/like", {
           id,
@@ -234,7 +173,6 @@ const Design = () => {
         })
         .then((res) => {
           if (res.data.status === "failed") {
-            console.log(res.data);
             window.location.replace("/login");
           } else if (res.data.status === "success") {
             if (res.data.isFav) {
@@ -242,22 +180,13 @@ const Design = () => {
                 color: "youtube",
                 isFav: true,
               });
-              setshowNumFav({
-                num_of_fav: res.data.num_of_fav[0].d_NumFavorite,
-              });
             } else {
               setcolorIcon4({
                 color: "",
                 isFav: false,
               });
-              setshowNumFav({
-                num_of_fav: res.data.num_of_fav[0].d_NumFavorite,
-              });
             }
-            // console.log(com);
-            // window.location.reload();
           }
-          console.log(res);
         });
     } catch (error) {
       console.error("Error adding comment:", error);
@@ -265,15 +194,8 @@ const Design = () => {
   };
   const handleClickLatest = async () => {
     let id = 31105;
-    // handleClick(id)
     let isFav = colorIcon5.isFav;
-    console.log(isFav);
-    // console.log(id);
     try {
-      console.log({
-        id,
-        isFav,
-      });
       await axios
         .post("/design/like", {
           id,
@@ -281,7 +203,6 @@ const Design = () => {
         })
         .then((res) => {
           if (res.data.status === "failed") {
-            console.log(res.data);
             window.location.replace("/login");
           } else if (res.data.status === "success") {
             if (res.data.isFav) {
@@ -289,22 +210,13 @@ const Design = () => {
                 color: "youtube",
                 isFav: true,
               });
-              setshowNumFav({
-                num_of_fav: res.data.num_of_fav[0].d_NumFavorite,
-              });
             } else {
               setcolorIcon5({
                 color: "",
                 isFav: false,
               });
-              setshowNumFav({
-                num_of_fav: res.data.num_of_fav[0].d_NumFavorite,
-              });
             }
-            // console.log(com);
-            // window.location.reload();
           }
-          console.log(res);
         });
     } catch (error) {
       console.error("Error adding comment:", error);
@@ -325,28 +237,22 @@ const Design = () => {
                 src={"http://127.0.0.1:3333/images/Gaming_Sidebar.png"}
               />
             }
-            flowing
+            wide='very'
             hoverable
             position="right center"
           >
             <Grid centered divided>
               <Grid.Column textAlign="center">
-                <Header as="h4">Basic Plan</Header>
+                <Header as="h4">Sidebar </Header>
                 <p>
-                  <b>1</b> คำอธิบายยยยยยยยยยยยยยยยยยยยยยยยยยยย
+                  <b>Sidebar: </b> เพื่อการนำทางที่ครอบคลุมและเข้าถึงได้ง่าย ช่วยให้ผู้ใช้สามารถสำรวจพื้นที่ต่าง ๆ 
+                  ของแพลตฟอร์ม แถบด้านข้างช่วยให้แน่ใจว่าฟีเจอร์หลักและฟังก์ชันต่างๆ พร้อมใช้งานในขณะที่ผู้ใช้รับชมและโต้ตอบกับสตรีมเมอร์
                 </p>
                 <Button
                   onClick={handleClickSide}
-                  // floated="right"
                   content="Like"
                   icon="heart"
                   color={colorIcon1.color}
-                  label={{
-                    as: "a",
-                    basic: true,
-                    // content: `${showNumFav.num_of_fav}`,
-                  }}
-                  labelPosition="right"
                 />
               </Grid.Column>
             </Grid>
@@ -360,28 +266,24 @@ const Design = () => {
                   src={"http://127.0.0.1:3333/images/Gaming_Ads.png"}
                 />
               }
-              flowing
+              wide='very'
               hoverable
               position="bottom center"
             >
               <Grid centered divided>
                 <Grid.Column textAlign="center">
-                  <Header as="h4">Basic Plan</Header>
+                  <Header as="h4">Ads </Header>
                   <p>
-                    <b>2</b> คำอธิบายยยยยยยยยยยยยยยยยยยยยยยยยยยย
+                    <b>Ads: </b> การวางโฆษณาที่ด้านบนสุดของหน้าช่วยให้ผู้ลงโฆษณามองเห็นได้ชัดเจน 
+                    เมื่อผู้ใช้เข้าชมเว็บไซต์ มีแนวโน้มที่จะมุ่งความสนใจไปที่ส่วนบนสุดและมีอัตราการคลิกผ่านที่สูงกว่าเมื่อเทียบกับ
+                    โฆษณาที่วางในตำแหน่งอื่นๆ การวางโฆษณาในตำแหน่งที่สำคัญนี้ทำให้ผู้โฆษณาสามารถเพิ่มการมองเห็น
+                    และเพิ่มโอกาสในการดึงดูดความสนใจของผู้ใช้
                   </p>
                   <Button
                     onClick={handleClickAds}
-                    // floated="right"
                     content="Like"
                     icon="heart"
                     color={colorIcon2.color}
-                    label={{
-                      as: "a",
-                      basic: true,
-                      // content: `${showNumFav.num_of_fav}`,
-                    }}
-                    labelPosition="right"
                   />
                 </Grid.Column>
               </Grid>
@@ -395,28 +297,23 @@ const Design = () => {
                     src={"http://127.0.0.1:3333/images/Gaming_GameNews.png"}
                   />
                 }
-                flowing
+                wide
                 hoverable
-                position="right center"
+                position="bottom center"
               >
                 <Grid centered divided>
                   <Grid.Column textAlign="center">
-                    <Header as="h4">Basic Plan</Header>
+                    <Header as="h4">News </Header>
                     <p>
-                      <b>1</b> คำอธิบายยยยยยยยยยยยยยยยยยยยยยยยยยยย
+                      <b>News: </b> การวางข่าวสารไว้ใต้ส่วน "คำแนะนำ" และ "เกม" 
+                      ช่วยให้ผู้ใช้ที่ค้นหาข้อมูลเกี่ยวกับเกมโดยเฉพาะสามารถเข้าถึงสิ่งที่พวกเขากำลังมองหาได้อย่างรวดเร็ว
+                      ก่อนที่จะดำดิ่งสู่การอัปเดตข่าวล่าสุด 
                     </p>
                     <Button
                       onClick={handleClickNews}
-                      // floated="right"
                       content="Like"
                       icon="heart"
                       color={colorIcon3.color}
-                      label={{
-                        as: "a",
-                        basic: true,
-                        // content: `${showNumFav.num_of_fav}`,
-                      }}
-                      labelPosition="right"
                     />
                   </Grid.Column>
                 </Grid>
@@ -431,28 +328,23 @@ const Design = () => {
                   src={"http://127.0.0.1:3333/images/Gaming_Game.png"}
                 />
               }
-              flowing
+              wide='very'
               hoverable
               position="top center"
             >
               <Grid centered divided>
                 <Grid.Column textAlign="center">
-                  <Header as="h4">Basic Plan</Header>
+                  <Header as="h4">Game </Header>
                   <p>
-                    <b>1</b> คำอธิบายยยยยยยยยยยยยยยยยยยยยยยยยยยย
+                    <b>Game: </b> ผู้ชมส่วนใหญ่อาจเยี่ยมชมเว็บไซต์เพื่อดูคำแนะนำและข้อมูลที่เกี่ยวข้องกับเกมเฉพาะ การวางส่วน "คำแนะนำ" 
+                    และ "เกม" ไว้ด้านบนอย่างเด่นชัด ผู้ใช้ที่สนใจค้นหาเคล็ดลับ บทสรุป หรือกลยุทธ์ต่างๆ สามารถเข้าถึงเนื้อหาที่เกี่ยวข้องได้อย่างง่ายดาย
+                    โดยไม่ต้องค้นหาอย่างละเอียด
                   </p>
                   <Button
                     onClick={handleClickGame}
-                    // floated="right"
                     content="Like"
                     icon="heart"
                     color={colorIcon4.color}
-                    label={{
-                      as: "a",
-                      basic: true,
-                      // content: `${showNumFav.num_of_fav}`,
-                    }}
-                    labelPosition="right"
                   />
                 </Grid.Column>
               </Grid>
@@ -466,28 +358,23 @@ const Design = () => {
                   src={"http://127.0.0.1:3333/images/Gaming_Latest.png"}
                 />
               }
-              flowing
+              wide
               hoverable
               position="top center"
             >
               <Grid centered divided>
                 <Grid.Column textAlign="center">
-                  <Header as="h4">Basic Plan</Header>
+                  <Header as="h4">Latest News </Header>
                   <p>
-                    <b>1</b> คำอธิบายยยยยยยยยยยยยยยยยยยยยยยยยยยย
+                    <b>Latest News: </b> การวางข่าวสารไว้ใต้ส่วน "คำแนะนำ" และ "เกม" 
+                    ช่วยให้ผู้ใช้ที่ค้นหาข้อมูลเกี่ยวกับเกมโดยเฉพาะสามารถเข้าถึงสิ่งที่พวกเขากำลังมองหาได้อย่างรวดเร็ว
+                    ก่อนที่จะดำดิ่งสู่การอัปเดตข่าวล่าสุด  
                   </p>
                   <Button
                     onClick={handleClickLatest}
-                    // floated="right"
                     content="Like"
                     icon="heart"
                     color={colorIcon5.color}
-                    label={{
-                      as: "a",
-                      basic: true,
-                      // content: `${showNumFav.num_of_fav}`,
-                    }}
-                    labelPosition="right"
                   />
                 </Grid.Column>
               </Grid>

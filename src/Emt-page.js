@@ -14,10 +14,8 @@ const Emt_page = () => {
         if (res.data.status === "failed") {
           console.log("failed");
         } else if (res.data.status === "success") {
-          console.log("eiei");
           window.location.replace("/login");
         }
-        console.log(res.data);
       });
     } catch (error) {
       console.log(error);

@@ -1,5 +1,5 @@
 .cards {
-    padding: 1rem;
+    /* padding: 1rem; */
     background: none;
 }
 
@@ -51,7 +51,7 @@
 
 .cards__item__pic-wrap {
     position: relative;
-    padding-top: 67%;
+    /* padding-top: 67%; */
     overflow: hidden;
 }
 
@@ -64,7 +64,7 @@
     content: attr(data-category);
     position: absolute;
     bottom: 0;
-    padding: 10px 12px;
+    /* padding: 10px 12px; */
     width: 100%;
     height: 60px;
     font-size: 25px;

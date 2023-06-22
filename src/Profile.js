@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import './Profile.css';
 import { MDBCol, MDBContainer, MDBRow, MDBCard, MDBCardText, MDBCardBody, MDBCardImage, MDBBtn, MDBTypography } from 'mdb-react-ui-kit';
 import axios from "./api/axios";
-import Navbar from './component/Navbar/Navbar';
-import { Sticky } from 'semantic-ui-react';
 import FavList from './Fav-list';
 
 
@@ -23,11 +21,9 @@ const Profile = (props) => {
     try {
       await axios.post('/getprofile').then((res) => {
         if (res.data.status === 'failed') {
-          console.log(res.data)
           window.location.replace('/login');
         }
         else if (res.data.status === 'success') {
-          console.log(res.data);
           if (res.data.data.m_IMG === null) {
             let data = {
               email: res.data.data.m_Email,
@@ -38,7 +34,6 @@ const Profile = (props) => {
               Img: 'http://127.0.0.1:3333/images/no-pic.png',
             }
             setshowprofile(data)
-            console.log(data);
           } else {
             let data = {
               email: res.data.data.m_Email,
@@ -49,14 +44,12 @@ const Profile = (props) => {
               Img: res.data.data.m_IMG,
             }
             setshowprofile(data)
-            console.log(data);
           }
         }
 
       })
     } catch (error) {
       console.log(error)
-      // window.location.replace('/login');
     }
   }
 
@@ -77,23 +70,10 @@ const Profile = (props) => {
                 </div>
                 <div className="ms-4" style={{ marginTop: '150px' }}>
                   <MDBTypography tag="h1">{showprofile.Pname}</MDBTypography>
-                  {/* <MDBCardText>New York</MDBCardText> */}
                 </div>
               </div>
               <div className="p-4 text-black" style={{ backgroundColor: '#f8f9fa' }}>
                 <div className="d-flex justify-content-end text-center py-1">
-                  {/* <div>
-                    <MDBCardText className="mb-1 h5">253</MDBCardText>
-                    <MDBCardText className="small text-muted mb-0">Photos</MDBCardText>
-                  </div>
-                  <div className="px-3">
-                    <MDBCardText className="mb-1 h5">1026</MDBCardText>
-                    <MDBCardText className="small text-muted mb-0">Followers</MDBCardText>
-                  </div>
-                  <div>
-                    <MDBCardText className="mb-1 h5">478</MDBCardText>
-                    <MDBCardText className="small text-muted mb-0">Following</MDBCardText>
-                  </div> */}
                 </div>
               </div>
               <MDBCardBody className="text-black p-4">
@@ -105,31 +85,9 @@ const Profile = (props) => {
                     <MDBCardText className="font-italic mb-1">Tel: {showprofile.Tel}</MDBCardText>
                   </div>
                 </div>
-                {/* <div className="d-flex justify-content-between align-items-center mb-4">
-                  <MDBCardText className="lead fw-normal mb-0">Favorite list</MDBCardText>
-                  <MDBCardText className="mb-0"><a href="#!" className="text-muted">Show all</a></MDBCardText>
-                </div> */}
+
                 <FavList/>
-                {/* <MDBRow>
-                  <MDBCol className="mb-2">
-                    <MDBCardImage src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(112).webp"
-                      alt="image 1" className="w-100 rounded-3" />
-                  </MDBCol>
-                  <MDBCol className="mb-2">
-                    <MDBCardImage src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(107).webp"
-                      alt="image 1" className="w-100 rounded-3" />
-                  </MDBCol>
-                </MDBRow>
-                <MDBRow className="g-2">
-                  <MDBCol className="mb-2">
-                    <MDBCardImage src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(108).webp"
-                      alt="image 1" className="w-100 rounded-3" />
-                  </MDBCol>
-                  <MDBCol className="mb-2">
-                    <MDBCardImage src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(114).webp"
-                      alt="image 1" className="w-100 rounded-3" />
-                  </MDBCol>
-                </MDBRow> */}
+
               </MDBCardBody>
             </MDBCard>
           </MDBCol>

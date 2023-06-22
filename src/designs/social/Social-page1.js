@@ -17,9 +17,6 @@ const Design = () => {
   const realToken = localStorage.getItem("token");
   axios.defaults.headers.common["authorization"] = `Bearer ${realToken}`;
 
-  const [showNumFav, setshowNumFav] = useState({
-    num_of_fav: 0,
-  });
   const [colorIcon1, setcolorIcon1] = useState({
     color: "",
     isFav: false,
@@ -36,7 +33,6 @@ const Design = () => {
   const loaddata = async () => {
     try {
       await axios.get(`/contents-islike`).then((res) => {
-        console.log(res.data.result.length);
         if (res.data.status === 'success') {
           for (let i = 0; i < res.data.result.length; i++) {
             if (res.data.result[i].ct_ID === 11101) {
@@ -65,16 +61,8 @@ const Design = () => {
 
   const handleClickNav = async () => {
     let id = 11101
-    // handleClick(id)
     let isFav = colorIcon1.isFav;
-    console.log(isFav);
-    // console.log(id);
     try {
-
-      console.log({
-        id,
-        isFav,
-      });
       await axios
         .post("/design/like", {
           id,
@@ -82,7 +70,6 @@ const Design = () => {
         })
         .then((res) => {
           if (res.data.status === "failed") {
-            console.log(res.data);
             window.location.replace("/login");
           } else if (res.data.status === "success") {
             if (res.data.isFav) {
@@ -90,22 +77,13 @@ const Design = () => {
                 color: "youtube",
                 isFav: true,
               });
-              setshowNumFav({
-                num_of_fav: res.data.num_of_fav[0].d_NumFavorite,
-              });
             } else {
               setcolorIcon1({
                 color: "",
                 isFav: false,
               });
-              setshowNumFav({
-                num_of_fav: res.data.num_of_fav[0].d_NumFavorite,
-              });
             }
-            // console.log(com);
-            // window.location.reload();
           }
-          console.log(res);
         });
     } catch (error) {
       console.error("Error adding comment:", error);
@@ -113,16 +91,8 @@ const Design = () => {
   }
   const handleClickPost = async () => {
     let id = 11102
-    // handleClick(id)
     let isFav = colorIcon2.isFav;
-    console.log(isFav);
-    // console.log(id);
     try {
-
-      console.log({
-        id,
-        isFav,
-      });
       await axios
         .post("/design/like", {
           id,
@@ -130,7 +100,6 @@ const Design = () => {
         })
         .then((res) => {
           if (res.data.status === "failed") {
-            console.log(res.data);
             window.location.replace("/login");
           } else if (res.data.status === "success") {
             if (res.data.isFav) {
@@ -138,22 +107,13 @@ const Design = () => {
                 color: "youtube",
                 isFav: true,
               });
-              setshowNumFav({
-                num_of_fav: res.data.num_of_fav[0].d_NumFavorite,
-              });
             } else {
               setcolorIcon2({
                 color: "",
                 isFav: false,
               });
-              setshowNumFav({
-                num_of_fav: res.data.num_of_fav[0].d_NumFavorite,
-              });
             }
-            // console.log(com);
-            // window.location.reload();
           }
-          console.log(res);
         });
     } catch (error) {
       console.error("Error adding comment:", error);
@@ -161,16 +121,8 @@ const Design = () => {
   }
   const handleClickRecent = async () => {
     let id = 11103
-    // handleClick(id)
     let isFav = colorIcon3.isFav;
-    console.log(isFav);
-    // console.log(id);
     try {
-
-      console.log({
-        id,
-        isFav,
-      });
       await axios
         .post("/design/like", {
           id,
@@ -178,7 +130,6 @@ const Design = () => {
         })
         .then((res) => {
           if (res.data.status === "failed") {
-            console.log(res.data);
             window.location.replace("/login");
           } else if (res.data.status === "success") {
             if (res.data.isFav) {
@@ -186,22 +137,13 @@ const Design = () => {
                 color: "youtube",
                 isFav: true,
               });
-              setshowNumFav({
-                num_of_fav: res.data.num_of_fav[0].d_NumFavorite,
-              });
             } else {
               setcolorIcon3({
                 color: "",
                 isFav: false,
               });
-              setshowNumFav({
-                num_of_fav: res.data.num_of_fav[0].d_NumFavorite,
-              });
             }
-            // console.log(com);
-            // window.location.reload();
           }
-          console.log(res);
         });
     } catch (error) {
       console.error("Error adding comment:", error);
@@ -222,28 +164,22 @@ const Design = () => {
                 src={"http://127.0.0.1:3333/images/Social1_Nav.png"}
               />
             }
-            flowing
+            wide='very'
             hoverable
             position="bottom center"
           >
             <Grid centered divided>
               <Grid.Column textAlign="center">
-                <Header as="h4">Basic Plan</Header>
+                <Header as="h4">Navbar </Header>
                 <p>
-                  <b>1</b> คำอธิบายยยยยยยยยยยยยยยยยยยยยยยยยยยย
+                  <b>Navbar: </b> การวางแถบ Navbar ที่ด้านบนของเว็บไซต์ช่วยให้ผู้ใช้มองเห็นได้ทันทีและช่วยให้ผู้ใช้เข้าถึงได้ง่าย 
+                  ผู้ใช้ส่วนใหญ่คุ้นเคยกับการค้นหาสิ่งต่างๆ ที่ด้านบนของหน้า ซึ่งช่วยลดช่วงการเรียนรู้และเพิ่มประสบการณ์ผู้ใช้
                 </p>
                 <Button
                   onClick={handleClickNav}
-                  // floated="right"
                   content="Like"
                   icon="heart"
                   color={colorIcon1.color}
-                  label={{
-                    as: "a",
-                    basic: true,
-                    // content: `${showNumFav.num_of_fav}`,
-                  }}
-                  labelPosition="right"
                 />
               </Grid.Column>
             </Grid>
@@ -258,28 +194,22 @@ const Design = () => {
                   src={"http://127.0.0.1:3333/images/Social1_page1_post.png"}
                 />
               }
-              flowing
+              wide
               hoverable
               position="right center"
             >
               <Grid centered divided>
                 <Grid.Column textAlign="center">
-                  <Header as="h4">Basic Plan</Header>
+                  <Header as="h4">Post </Header>
                   <p>
-                    <b>2</b> คำอธิบายยยยยยยยยยยยยยยยยยยยยยยยยยยย
+                    <b>Post: </b> การวางโพสต์ในส่วนตรงกลางของเพจจะดึงความสนใจของผู้ใช้ไปที่เนื้อหา
+                    และสร้างประสบการณ์ผู้ใช้ที่คุ้นเคยและสอดคล้องกันในแพลตฟอร์มต่างๆ นอกจากนี้ช่วยให้สามารถอ่านและสแกนได้ดีขึ้น
                   </p>
                   <Button
                     onClick={handleClickPost}
-                    // floated="right"
                     content="Like"
                     icon="heart"
                     color={colorIcon2.color}
-                    label={{
-                      as: "a",
-                      basic: true,
-                      // content: `${showNumFav.num_of_fav}`,
-                    }}
-                    labelPosition="right"
                   />
                 </Grid.Column>
               </Grid>
@@ -294,29 +224,24 @@ const Design = () => {
                   }
                 />
               }
-              flowing
               hoverable
-              position="right center"
+              position="bottom center"
+              wide='very'
             >
               <Grid centered divided>
                 <Grid.Column textAlign="center">
-                  <Header as="h4">Basic Plan</Header>
+                  <Header as="h4">Recent Post </Header>
                   <p>
-                    <b>3</b> คำอธิบายยยยยยยยยยยยยยยยยยยยยยยยยยยย
+                    <b>Recent Post: </b>การวางตำแหน่งแถบไว้ทางด้านขวา ทำให้เนื้อหาหลักกินพื้นที่ส่วนใหญ่ของหน้าจอ 
+                    ทำให้เกิดลำดับชั้นของภาพแถบด้านข้างกลายเป็นองค์ประกอบที่ผู้ใช้สามารถเหลือบมองในขณะที่โฟกัสไปที่เนื้อหาหลัก 
+                    แถบด้านข้างจะยังคงอยู่ในตำแหน่งเมื่อผู้ใช้เลื่อนดูฟีด ทำให้เข้าถึงข้อมูลและตัวเลือกได้อย่างสม่ำเสมอโดยไม่รบกวนเนื้อหาหลัก
                   </p>
                   <Button
                     onClick={handleClickRecent}
-                    // floated="right"
                     id='11103'
                     content="Like"
                     icon="heart"
                     color={colorIcon3.color}
-                    label={{
-                      as: "a",
-                      basic: true,
-                      // content: `${showNumFav.num_of_fav}`,
-                    }}
-                    labelPosition="right"
                   />
                 </Grid.Column>
               </Grid>

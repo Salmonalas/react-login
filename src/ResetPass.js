@@ -32,7 +32,6 @@ const theme = createTheme();
 
 export default function ResetPass() {
   const { token } = useParams();
-  console.log(token);
 
   const [passwordError, setPasswordError] = useState(false);
   const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
@@ -70,7 +69,6 @@ export default function ResetPass() {
     setPasswordErrorMessage('success')
 
     try {
-      // console.log(response.data); // Handle the response as needed
       const password = confirmPassword
       await axios.post(`/resetpassword`, {
         token,
@@ -78,15 +76,10 @@ export default function ResetPass() {
         
       }).then((res) => {
         if (res.data.status === 'failed') {
-          console.log(res.data)
-          // window.location.replace('/login');
         }
         else if (res.data.status === 'success') {
-          // setPasswordErrorMessage('success2')
           window.location.replace('/login')
         }
-        console.log(res.data)
-      // Additional logic after successful password reset
       })
     } catch (error) {
       console.error(error); // Handle the error

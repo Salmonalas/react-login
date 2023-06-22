@@ -1,0 +1,27 @@
+.footer {
+    /* display: flex; */
+    background: linear-gradient(90deg, rgba(110, 94, 254) 0%, rgb(168, 104, 194) 100%);
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #000000;
+    /* padding:2rem; */
+    /* position:fixed; */
+    bottom: 0%;
+    width:100%;
+    margin-top: 80px;
+    /* max-width: 1000px; */
+    /* position: fixed; */
+    /* top: 20%; */
+    /* left: 23.5%; */
+    /* margin-top: -50px; */
+    /* margin-left: -100px; */
+  }
+
+  .font{
+    font-family: 'Prompt', sans-serif;
+  }
+
+  .mymg {
+    margin-top: 20px;
+  }

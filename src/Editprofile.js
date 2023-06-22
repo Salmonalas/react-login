@@ -1,22 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "./api/axios";
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Image } from "semantic-ui-react";
 import "./Edit.css";
-import Navbar from "./component/Navbar/Navbar";
-import { Sticky } from "semantic-ui-react";
 
 function Editprofile() {
   const [fnerror, setfnerror] = useState(false);
@@ -46,10 +38,8 @@ function Editprofile() {
     try {
       await axios.post("/getprofile").then((res) => {
         if (res.data.status === "failed") {
-          console.log(res.data);
           window.location.replace('/login');
         } else if (res.data.status === "success") {
-          console.log(res.data);
           if (res.data.data.m_IMG == null) {
             let data = {
               email: res.data.data.m_Email,
@@ -60,7 +50,6 @@ function Editprofile() {
               Img: "http://127.0.0.1:3333/images/no-pic.png",
             };
             setshowprofile(data);
-            console.log(data);
           } else {
             let data = {
               email: res.data.data.m_Email,
@@ -73,13 +62,11 @@ function Editprofile() {
             // let img = res.data.data.m_IMG
             // setProfileImage(img)
             setshowprofile(data);
-            console.log(data);
           }
         }
       });
     } catch (error) {
       console.log(error);
-      // window.location.replace('/login');
     }
   };
 
@@ -125,22 +112,18 @@ function Editprofile() {
     //   const tel =  data.get('phone')
     if (profileData.firstName.length === 0) {
       setfnerror(true);
-      // return;
     } else setfnerror(false);
 
     if (profileData.lastName.length === 0) {
       setlnerror(true);
-      // return;
     } else setlnerror(false);
 
     if (profileData.profileName.length === 0) {
       setpnerror(true);
-      // return;
     } else setpnerror(false);
 
     if (profileData.phone.length === 0) {
       settelerror(true);
-      // return;
     } else settelerror(false);
 
     try {
@@ -170,64 +153,12 @@ function Editprofile() {
           window.location.replace('/profile');
         }
       })
-      // await axios.post('/editprofile', formData).then((res)=>{
-      //   if (res.data.status === 'failed') {
-      //         console.log(res.data.msg);
-      //       }else if (res.data.status === 'success') {
-      //             // setAuth({ email })
-      //             // console.log(email);
-      //             // console.log(auth);
-      //             // window.location.replace('/profile')
-      //             console.log('eiei');
-      //           }
-      //           console.log(res.data);
-      // })
-
-      // if (
-      //   fname.length == 0 ||
-      //   lname.length == 0 ||
-      //   pname.length == 0 ||
-      //   tel.length == 0
-      // ) {
-      //   console.log("eiei");
-      // } else {
-      // await axios.post('/editprofile',{
-      //   fname, lname, pname, tel
-      // }).then((res)=>{
-      //   if (res.data.status === 'failed') {
-      //     console.log(res.data.msg);
-      //   }
-      //   else if (res.data.status === 'success') {
-      //     // setAuth({ email })
-      //     // console.log(email);
-      //     // console.log(auth);
-      //     // window.location.replace('/profile')
-      //   }
-      //   console.log(res.data); // Handle the response as needed
-      // })}
     } catch (error) {
       console.log(error);
     }
-
-    // console.log(userData);
-    // try {
-    //   const response = await axios.post('YOUR_API_ENDPOINT', userData);
-    //   console.log(response.data); // Handle the response as needed
-
-    //   // Additional logic after successful sign-up
-
-    // } catch (error) {
-    //   console.error(error); // Handle the error
-    // }
   };
 
   const handleChange = (event) => {
-    // if (event.target.name === "image") {
-    //   setProfileData((prevState) => ({
-    //     ...prevState,
-    //     image: event.target.files[0], // Update the image file in the profileData state
-    //   }));
-    // } else {
     const { name, value } = event.target;
     setProfileData((prevState) => ({
       ...prevState,
@@ -259,7 +190,6 @@ function Editprofile() {
           >
             <div className="citem">
               <h2>Update Profile Image</h2>
-              {/* {profileImage && ( */}
               <Image src={showprofile.Img} size="small" circular centered />
               {/* )} */}
               <input
@@ -273,9 +203,6 @@ function Editprofile() {
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  // autoComplete="given-name"
-                  // variant='outlined'
-                  // id="outlined-required"
                   name="firstName"
                   required
                   fullWidth
@@ -285,8 +212,6 @@ function Editprofile() {
                   value={profileData.firstName}
                   error={fnerror}
                   onChange={handleChange}
-                  // defaultValue={showprofile.Fname}
-                  // autoFocus
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -300,7 +225,6 @@ function Editprofile() {
                   value={profileData.lastName}
                   error={lnerror}
                   onChange={handleChange}
-                  // defaultValue={showprofile.Lname}
                   autoComplete="family-name"
                 />
               </Grid>
@@ -315,19 +239,16 @@ function Editprofile() {
                   value={profileData.profileName}
                   error={pnerror}
                   onChange={handleChange}
-                  // defaultValue={showprofile.Pname}
                   autoComplete="profile-name"
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  // required
                   fullWidth
                   id="email"
                   label={showprofile.email}
                   name="email"
                   placeholder={showprofile.email}
-                  // defaultValue={showprofile.email}
                   disabled
                   autoComplete="email"
                 />

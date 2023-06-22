@@ -25,21 +25,18 @@ const Design = () => {
   const realToken = localStorage.getItem("token");
   axios.defaults.headers.common["authorization"] = `Bearer ${realToken}`;
 
-  const [showdesign, setshowdesign] = useState([]);
   const [showcomment, setshowcomment] = useState([]);
 
   const [activeItem, setactiveItem] = useState({ name: "1" });
 
   const loaddata = async () => {
     try {
-      await axios.get(`/design/${token}`).then((res) => {
-        console.log(res.data);
+      await axios.get(`/showcomment/${token}`).then((res) => {
 
         if (res.data.status === "failed") {
           console.log("failed");
           window.location.replace("/");
         }
-        setshowdesign(res.data.design.d_Name);
         let com = res.data.comment.map((Item) => {
           return {
             name: Item.m_PName,
@@ -49,7 +46,6 @@ const Design = () => {
           };
         });
         setshowcomment(com);
-        console.log(com);
       });
     } catch (error) {
       console.log(error);
@@ -82,7 +78,6 @@ const Design = () => {
               setshowcomment(com);
               setnewComment("");
             }
-            console.log(res);
           });
         setnewComment("");
       } catch (error) {
@@ -114,19 +109,51 @@ const Design = () => {
     window.location.replace("/");
   };
 
+  const goreport = () => {
+    window.location.replace("/report-education");
+  }
+
   return (
     <div>
-      <div className="mybackbtn">
-        <Button
-        content="ย้อนกลับ"
-        labelPosition="left"
-        icon="left chevron"
-        onClick={gohome}
-      />
+      <div className="bgeducation">
+        <div className="aboutfont">
+          <b>ประเภทเว็บไซต์ Education</b>
+        </div>
       </div>
+
+      <div className="center font mymt50">
+        <b className="font24">ประเภทเว็บไซต์ Education</b>
+        <div className="mymt20">
+          <b className="font16">
+            ส่วนนี้แสดงการออกแบบในเว็บไซต์นั้นๆ
+            หากสนใจส่วนใดให้คลิกดูคำอธิบายด้านล่างนี้ได้เลย
+          </b>
+        </div>
+      </div>
+
+      <Grid centered>
+        <Grid.Column width={6} className="mybackbtn">
+          <Button
+            content="ย้อนกลับ"
+            labelPosition="left"
+            icon="left chevron"
+            onClick={gohome}
+          />
+        </Grid.Column>
+        <Grid.Column width={6} className="myrightbtn">
+          <Button
+            color="purple"
+            floated="right"
+            content="กราฟสรุปผล"
+            labelPosition="right"
+            icon="right chevron"
+            onClick={goreport}
+          />
+        </Grid.Column>
+      </Grid>
       
       <Container style={{ padding: "3em 0em" }}>
-        <h1 className="mycenter mymb20">{showdesign}</h1>
+        <h1 className="mycenter mymb20"></h1>
         <Segment>{page}</Segment>
       </Container>
 

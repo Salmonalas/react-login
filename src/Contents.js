@@ -16,14 +16,10 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import axios from "./api/axios";
-import AuthContext from "./context/AuthProvider";
 
 const Contents = () => {
-  // const { auth } = useContext(AuthContext);
-  // console.log(auth);
 
   const [showDesign, setshowDesign] = useState([]);
-  const [categories, setcategories] = useState([""]);
 
   useEffect(() => {
     onFirstLoad();
@@ -31,11 +27,8 @@ const Contents = () => {
 
   const onFirstLoad = () => {
     axios.get("/All-Design").then((res) => {
-      console.log(res.data);
       let data = res.data.data.map((Item) => {
         if (Item.c_ID === 10) {
-          // setcategories('social')
-          // console.log(categories);
           return {
             design_Name: Item.d_Name,
             num_of_fav: Item.d_NumFavorite,
@@ -66,13 +59,11 @@ const Contents = () => {
         }
       });
       setshowDesign(data);
-      console.log(data);
     });
   };
 
   const onClickSocial = () => {
     axios.get(`/All-Social-Design`).then((res) => {
-      console.log(res.data);
       let data = res.data.data.map((Item) => {
         return {
           design_Name: Item.d_Name,
@@ -82,13 +73,11 @@ const Contents = () => {
         };
       });
       setshowDesign(data);
-      console.log(data);
     });
   };
 
   const onClickStreaming = () => {
     axios.get(`/All-Streaming-Design`).then((res) => {
-      console.log(res.data);
       let data = res.data.data.map((Item) => {
         return {
           design_Name: Item.d_Name,
@@ -98,13 +87,11 @@ const Contents = () => {
         };
       });
       setshowDesign(data);
-      console.log(data);
     });
   };
 
   const onClickGaming = () => {
     axios.get(`/All-Gaming-Design`).then((res) => {
-      console.log(res.data);
       let data = res.data.data.map((Item) => {
         return {
           design_Name: Item.d_Name,
@@ -114,13 +101,11 @@ const Contents = () => {
         };
       });
       setshowDesign(data);
-      console.log(data);
     });
   };
 
   const onClickEducation = () => {
     axios.get(`/All-Education-Design`).then((res) => {
-      console.log(res.data);
       let data = res.data.data.map((Item) => {
         return {
           design_Name: Item.d_Name,
@@ -130,7 +115,6 @@ const Contents = () => {
         };
       });
       setshowDesign(data);
-      console.log(data);
     });
   };
 

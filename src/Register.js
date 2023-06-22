@@ -81,23 +81,16 @@ function SignUp() {
       return;
     }
 
-    console.log(userData);
     try {
       await axios.post("/signup", userData).then((res) => {
         if (res.data.status === "failed") {
-          console.log(res.data);
-          // window.location.replace('/login');
         } else if (res.data.status === "success") {
-          // setPasswordErrorMessage('success2')
           window.location.replace("/login");
-          console.log("eiei");
         }
-        console.log(res.data);
       });
 
-      // Additional logic after successful sign-up
     } catch (error) {
-      console.error(error); // Handle the error
+      console.error(error);
     }
   };
 

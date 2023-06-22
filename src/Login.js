@@ -39,7 +39,6 @@ function SignInSide() {
           localStorage.setItem('token', res.data.token);
           window.location.replace('/') // ไปหน้าที่ต้องการ
         }
-        console.log(res.data); // Handle the response as needed
       });
 
     } catch (error) {

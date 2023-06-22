@@ -1,100 +1,72 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import "./fav-list.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faGlobe,
-  faVideo,
-  faGamepad,
-  faGraduationCap,
-} from "@fortawesome/free-solid-svg-icons";
-// import Card from "@mui/material/Card";
 import { Card, Icon, Button } from "semantic-ui-react";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
 import Grid from "@mui/material/Grid";
-// import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-//import "./contentbar.css";
-//import axios from '../../api/axios-work';
 import axios from "./api/axios";
-// import AuthContext from "./context/AuthProvider";
 import {
-  MDBCol,
-  MDBContainer,
-  MDBRow,
-  MDBCard,
   MDBCardText,
-  MDBCardBody,
-  MDBCardImage,
-  MDBBtn,
-  MDBTypography,
 } from "mdb-react-ui-kit";
 
 const FavList = (props) => {
-  //   const [selectedMenu, setSelectedMenu] = useState({
-  //     social: false,
-  //     streaming: false,
-  //     gaming: false,
-  //     education: false,
-  //   });
-  //   const { auth } = useContext(AuthContext);
-  //   console.log(auth);
+  var data = []
+  var social = false;
+  var streaming = false;
+  var gaming = false;
+  var education = false;
 
   const [showDesign, setshowDesign] = useState([]);
-  const [isfav, setisfav] = useState(false);
 
   useEffect(() => {
     loaddata();
   }, []);
 
   const loaddata = () => {
-    // setSelectedMenu({
-    // 	social: true,
-    // 	streaming: false,
-    // 	gaming: false,
-    // 	education: false,
-    // });
     try {
       axios.post(`/fav-list`).then((res) => {
-        console.log(res.data);
         if (res.data.status === "success") {
-          let data = res.data.data.map((Item) => {
-            return {
-              // design_id: Item.d_ID,
-              design_Name: Item.d_Name,
-              num_of_fav: Item.d_NumFavorite,
-              description: Item.d_Description,
-              path: `/design/${Item.d_ID}`,
-            };
-          });
+          for (let i = 0; i < res.data.data.length; i++) {
+            if ((!social)&&(Math.trunc(res.data.data[i].p_ID/10)===1001)) {
+              social = true
+              data.push({
+                design_Name: 'Social Media',
+                description: 'คลิกเพิ่อดูตัวอย่างการออกแบบเพิ่มเติม',
+                path: `/Social/10010`,
+              })
+              
+            } else if ((!streaming)&&(Math.trunc(res.data.data[i].p_ID/10)===2001)) {
+              streaming = true
+              data.push({
+                design_Name: 'Streaming',
+                description: 'คลิกเพิ่อดูตัวอย่างการออกแบบเพิ่มเติม',
+                path: `/Streaming/20010`,
+              })
+            } else if ((!gaming)&&(Math.trunc(res.data.data[i].p_ID/10)===3001)) {
+              gaming = true
+              data.push({
+                design_Name: 'Gaming',
+                description: 'คลิกเพิ่อดูตัวอย่างการออกแบบเพิ่มเติม',
+                path: `/Gaming/30010`,
+              })
+            } else if ((!education)&&(Math.trunc(res.data.data[i].p_ID/10)===4001)) {
+              education = true
+              data.push({
+                design_Name: 'Education',
+                description: 'คลิกเพิ่อดูตัวอย่างการออกแบบเพิ่มเติม',
+                path: `/Education/40010`,
+              })
+            }
+          }
           setshowDesign(data);
-          console.log(data);
-          setisfav(true);
+          // setisfav(true);
         }
       });
     } catch (error) {
       console.log(error);
     }
   };
-//   const havefav = () => {
-//     if (!showDesign) {
-//       return (
-//         <MDBCardText className="mb-0">
-//           <Button onClick={loaddata}>Show all</Button>
-//         </MDBCardText>
-//       );
-//     } else
-//       return (
-//         <MDBCardText className="mb-0">
-//           <Button onClick={loaddata} >
-//             Show all
-//           </Button>
-//         </MDBCardText>
-//       );
-//   };
+
   let showContent = <></>;
   showContent = (
     <Container sx={{ py: 1 }} maxWidth="md">
@@ -109,11 +81,10 @@ const FavList = (props) => {
                   flexDirection: "column",
                 }}
               >
-                <Card.Content header={Item.design_Name} />
-                {/* <Card.Content description={Item.description} /> */}
+                <Card.Content header={Item.design_Name} description={Item.description} />
                 <Card.Content extra>
-                  <Icon name="heart" />
-                  {Item.num_of_fav} Favorites
+                  <Icon name="heart" color="red" />
+                  {Item.num_of_fav} Favorited
                 </Card.Content>
               </Card>
             </Link>
@@ -129,12 +100,6 @@ const FavList = (props) => {
     <div>
       <div className="d-flex justify-content-between align-items-center mb-4">
         <MDBCardText className="lead fw-normal mb-0">Favorite list</MDBCardText>
-        {/* {havefav()} */}
-        {/* <MDBCardText className="mb-0">
-          <Button  >
-            Show all
-          </Button>
-        </MDBCardText> */}
       </div>
       <div className="cards">
         <div className="cards__container">{showContent}</div>
